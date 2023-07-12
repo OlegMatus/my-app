@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Child2 = () => {
+const SubChild12 = () => {
     return (
         <div>
-
+            SubChild1_2
         </div>
     );
 };
 
-export {Child2};
+export {SubChild12};
