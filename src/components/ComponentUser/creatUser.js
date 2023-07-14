@@ -4,29 +4,32 @@ import React, {useEffect, useRef} from 'react';
 import styles from './Forms.module.css'
 import {logDOM} from "@testing-library/react";
 
-const CreatUser = () =>{
-const nameRef = useRef('');
-const userNameRef = useRef('');
-const emailRef = useRef('');
+
+const CreatUser = () => {
+    const nameRef = useRef('');
+    const userNameRef = useRef('');
+    const emailRef = useRef('');
 
 
-useEffect(()=>{
-    console.log('render')
-})
-    const handleSubmit = (e)=> {
-    e.preventDefault();
-        console.log(nameRef.current.value,userNameRef.current.value,emailRef.current.value)
+    useEffect(() => {
+        console.log('render')
+    })
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(nameRef.current.value, userNameRef.current.value, emailRef.current.value)
 
-    fetch('http://jsonplaceholder.typicode.com/users', {
-        method:'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-            name:nameRef.current.value,
-            username:userNameRef.current.value,
-            email:emailRef.current.value
+        fetch('http://jsonplaceholder.typicode.com/users', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: nameRef.current.value,
+                username: userNameRef.current.value,
+                email: emailRef.current.value
+            })
+        }).then(resp => resp.json()).then((data) => console.log(data)).catch(e => {
+            console.log(e)
         })
-    }).then(resp=> resp.json()).then((data)=> console.log(data))
-};
+    };
 
     return (
         <div className={styles.wrapper}>

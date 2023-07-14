@@ -1,12 +1,14 @@
 import './App.css';
-import {CreatUser} from "./components/Component1/creatUser";
+import {CreatUser} from "./components/ComponentUser/creatUser";
+import {CreatComment} from "./components/ComponentComent/CreatComment";
 
 function App() {
-  return (
-    <div className="App">
-<CreatUser/>
-    </div>
-  );
+    return (
+        <div className="App">
+            {/*<CreatUser/>*/}
+            <CreatComment/>
+        </div>
+    );
 }
 
 export default App;
