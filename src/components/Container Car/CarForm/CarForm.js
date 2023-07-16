@@ -34,79 +34,66 @@
 // };
 //
 // export default CarForm;
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
 
 
-const CarForm = ({setOnSet}) => {
-    const {register, handleSubmit, reset} = useForm();
-    const onCreate = (car) =>{
-      fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
-          method: 'Post',
-          headers: {'content-type':'application/json'},
-          body:JSON.stringify(car)
-      }).then((resp)=> {
-          if (resp.ok) {
-              console.log('Машина успішно створена')
-          }
-          return resp.json()
-      })
-          .then(() => {
-              setOnSet(prev=>!prev);
-              reset();
-          })
-      .catch((error) => {
-            console.log("ERROR: ", error);
-          })
+const CarForm = ({setOnSet, updateCar, setUpdateCar}) => {
+    const {register, handleSubmit, reset,
+        setValue} = useForm();
+
+    useEffect(() => {
+        if (updateCar) {
+            setValue('brand', updateCar.brand)
+            setValue('price', updateCar.price)
+            setValue('year', updateCar.year)
+        }
+    }, [updateCar])
+    const onCreate = (car) => {
+        fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
+            method: 'Post',
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(car)
+        }).then((resp) => {
+            if (resp.ok) {
+                console.log('Машина успішно створена')
+            }
+            return resp.json()
+        })
+            .then(() => {
+                setOnSet(prev => !prev);
+                reset();
+            })
+            .catch((error) => {
+                console.log("ERROR: ", error);
+            })
     }
 
-
-    const updateCar = (carId, updateData) => {
-        fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${carId}`, {
+    const updatesCar = (car) => {
+        fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${updateCar.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(updateData)
+            body: JSON.stringify(car)
         })
-            .then(resp=> {
-                if (!resp.ok) {
-                    throw new Error('error')
-                }
-                return resp.json()
-            })
-            .then(updatedData => {
-            console.log('Data updated:', updatedData);
-        })
-            .catch((error) => {
-            console.log("ERROR: ", error);
+            .then(resp => resp.json()).then(() => {
+            setOnSet(prev => !prev);
+            setUpdateCar(null);
+            reset();
         })
     }
 
-    const DeleteCar = (carId) => {
-fetch(`http://owu.linkpc.net/carsAPI/v1/cars/${carId}`, {
-    method: 'DELETE'
-}).then(resp=> {
-    if (resp.ok) {
-        console.log('Машина успішно видалена')
-    }
-    return resp.json()
-})
-    .catch((error) => {
-            console.log("ERROR: ", error);
-        })
-    }
+
     return (
         <>
-        <form onSubmit={handleSubmit(onCreate)}>
-            <label><input type="text" placeholder={'brand'} {...register('brand')}/></label>
-            <label><input type="number" placeholder={'price'} {...register('price')}/></label>
-            <label><input type="number" placeholder={'year'} {...register('year')}/></label>
-            <button>Save</button>
-        </form>
-            <button onSubmit={handleSubmit((data) => updateCar(4924, data))}>Update</button>
-            <button onClick={() => DeleteCar(4945)}>Delete</button>
-
+            <form onSubmit={handleSubmit(!updateCar ? onCreate : updatesCar)}>
+                <label><input type="text" placeholder={'brand'} {...register('brand')}/></label>
+                <label><input type="number" placeholder={'price'} {...register('price')}/></label>
+                <label><input type="number" placeholder={'year'} {...register('year')}/></label>
+                <button>{!updateCar?'Save':'Update'}</button>
+            </form>
         </>
     );
 };

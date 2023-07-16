@@ -6,12 +6,13 @@ import Cars from "./Cars/Cars";
 
 const ContainerCar = () => {
     const [onSet, setOnSet] = useState(null);
+    const [updateCar, setUpdateCar] = useState(null);
     return (
         <div>
             Car Form:
-            <CarForm setOnSet={setOnSet}/>
+            <CarForm setOnSet={setOnSet} updateCar={updateCar} setUpdateCar={setUpdateCar}/>
             <hr/>
-            <Cars onSet={onSet}/>
+            <Cars onSet={onSet} setOnSet={setOnSet} setUpdateCar={setUpdateCar}/>
         </div>
     );
 };
