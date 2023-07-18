@@ -37,20 +37,27 @@
 import React, {useEffect} from 'react';
 import {useForm} from "react-hook-form";
 import {joiResolver} from "@hookform/resolvers/joi";
+import {carValidator} from "../../../validators/carValidator";
+import {required} from "joi";
 
 
 const CarForm = ({setOnSet, updateCar, setUpdateCar}) => {
     const {register, handleSubmit, reset,
-        setValue} = useForm();
+        formState: {errors,isValid},
+        setValue} = useForm({
+        mode: "all",
+        resolver: joiResolver(carValidator)
+    });
 
     useEffect(() => {
         if (updateCar) {
-            setValue('brand', updateCar.brand)
+            setValue('brand', updateCar.brand.s)
             setValue('price', updateCar.price)
             setValue('year', updateCar.year)
         }
     }, [updateCar])
     const onCreate = (car) => {
+        console.log(car)
         fetch('http://owu.linkpc.net/carsAPI/v1/cars', {
             method: 'Post',
             headers: {'content-type': 'application/json'},
@@ -85,14 +92,28 @@ const CarForm = ({setOnSet, updateCar, setUpdateCar}) => {
         })
     }
 
-
     return (
         <>
             <form onSubmit={handleSubmit(!updateCar ? onCreate : updatesCar)}>
-                <label><input type="text" placeholder={'brand'} {...register('brand')}/></label>
-                <label><input type="number" placeholder={'price'} {...register('price')}/></label>
-                <label><input type="number" placeholder={'year'} {...register('year')}/></label>
-                <button>{!updateCar?'Save':'Update'}</button>
+                <label><input type="text" placeholder={'brand'} {...register('brand',{
+                    // required:true
+                })}/></label>
+                {errors.brand && <span>{errors.brand.message}</span>}
+                <label><input type="number" placeholder={'price'} {...register('price', {
+                    valueAsNumber:true,
+                    // required:true,
+                    // min: {value:0,message: 'price must be gte 0'},
+                    // max:{value:10000000, message:'price must be lte 10000000'}
+                    })}/></label>
+                {errors.price && <span>{errors.price.message}</span>}
+                <label><input type="number" placeholder={'year'} {...register('year' , {
+                    valueAsNumber:true,
+                //     required:true,
+                // min:{value:1990,message:'year must be gte 1990'},
+                // max:{value:new Date().getFullYear(), message: `year must be lte ${new Date().getFullYear()}`}
+                })}/></label>
+                {errors.year && <span>{errors.year.message}</span>}year
+                <button disabled={!isValid}>{!updateCar?'Save':'Update'}</button>
             </form>
         </>
     );
