@@ -1,5 +1,3 @@
-import todo from "../components/Todo/Todo";
-
 const baseURL = 'https://jsonplaceholder.typicode.com'
 
 const Endpoints = {
@@ -9,7 +7,7 @@ const Endpoints = {
 const urlsEndpoint = {
     todos: {
         base: Endpoints.TODOS,
-        byId: (id) => `${Endpoints.TODOS}/${id} `
+        // byId: (id) => `${Endpoints.TODOS}/${id} `
     },
     albums: {
         base: Endpoints.ALBUMS,
