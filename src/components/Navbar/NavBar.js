@@ -16,6 +16,10 @@ const NavBar = () => {
             label: 'albums',
             route: AppRoutes.ALBUMS,
         },
+        {
+            label: 'comments',
+            route: AppRoutes.COMMENTS,
+        },
     ]
     return (
         <div style={{

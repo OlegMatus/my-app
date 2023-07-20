@@ -1,22 +1,24 @@
 import React from 'react';
 
-const Album = ({album}) => {
-    const {userId, id, title} = album;
+const Comment = ({comment}) => {
+    const {postId, id, name, email, body} = comment;
     return (
         <div style={{
             width: '50%',
-            backgroundColor: "lightblue",
+            backgroundColor: "linen",
             display: "flex",
             flexFlow: "column",
             border: "solid grey",
             borderRadius: '10px',
             margin: '10px',
         }}>
-            <div>userId: {userId}</div>
+            <div>postId: {postId}</div>
             <div>id: {id}</div>
-            <div>title: {title}</div>
+            <div>name: {name}</div>
+            <div>email: {email}</div>
+            <div>body: {body}</div>
         </div>
     );
 };
 
-export default Album;
+export default Comment;

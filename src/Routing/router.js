@@ -3,6 +3,8 @@ import TList from "../components/TodoList/TList";
 import {NavBar} from "../components/Navbar/NavBar";
 import AlbumList from "../components/AlbumList/AlbumList";
 import {AppRoutes} from "./AppRoutes";
+import CommentList from "../components/CommentList/CommentList";
+import PostList from "../components/PostList/PostList";
 
 const AppLayout = () => (
     <>
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
             {
                 path: AppRoutes.ALBUMS,
                 element: <AlbumList/>
+            },
+            {
+                path: AppRoutes.COMMENTS,
+                element: <CommentList/>,
+                children: [{
+                    path: AppRoutes.POSTS,
+                    element: <PostList/>,
+                }]
             }
         ]
     },
