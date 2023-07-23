@@ -1,0 +1,6 @@
+.PostPage {
+    width: 70%;
+    border: 20px;
+    background-color: palegoldenrod;
+    display: flex;
+}

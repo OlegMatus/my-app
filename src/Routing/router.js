@@ -1,10 +1,16 @@
 import {createBrowserRouter, Outlet} from "react-router-dom";
-import TList from "../components/TodoList/TList";
+
 import {NavBar} from "../components/Navbar/NavBar";
-import AlbumList from "../components/AlbumList/AlbumList";
 import {AppRoutes} from "./AppRoutes";
-import CommentList from "../components/CommentList/CommentList";
+import TList from "../components/TodoList/TList";
 import PostList from "../components/PostList/PostList";
+import CommentList from "../components/CommentList/CommentList";
+import AlbumList from "../components/AlbumList/AlbumList";
+import TodosPage from "../Pages/TodosPage/TodosPage";
+import AlbumsPage from "../Pages/AlbumsPage/AlbumsPage";
+import CommentsPage from "../Pages/CommentsPage/CommentsPage";
+import PostPage from "../Pages/PostPage/PostPage";
+
 
 const AppLayout = () => (
     <>
@@ -29,18 +35,18 @@ export const router = createBrowserRouter([
             },
             {
                 path: AppRoutes.TODOS,
-                element: <TList/>
+                element: <TodosPage/>
             },
             {
                 path: AppRoutes.ALBUMS,
-                element: <AlbumList/>
+                element: <AlbumsPage/>
             },
             {
                 path: AppRoutes.COMMENTS,
-                element: <CommentList/>,
+                element: <CommentsPage/>,
                 children: [{
                     path: AppRoutes.POSTS,
-                    element: <PostList/>,
+                    element: <PostPage/>,
                 }]
             }
         ]

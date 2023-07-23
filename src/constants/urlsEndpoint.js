@@ -4,7 +4,7 @@ const Endpoints = {
     TODOS: '/todos',
     ALBUMS: '/albums',
     COMMENTS: '/comments',
-    POSTS: '/comments/posts'
+    POSTS: '/posts'
 };
 const urlsEndpoint = {
     todos: {
@@ -15,10 +15,11 @@ const urlsEndpoint = {
     },
     comments: {
         base: Endpoints.COMMENTS,
-        byId: (id) => `${Endpoints.COMMENTS}/${id}`
     },
     posts: {
         base: Endpoints.POSTS,
+        byId: (id) => `${Endpoints.POSTS}/${id}`
+
     },
 }
 export {baseURL, urlsEndpoint}

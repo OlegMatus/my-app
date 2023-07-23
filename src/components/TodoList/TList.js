@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {todService} from "../../services/todService";
-import Todo from "../Todo/Todo";
+import {todService} from "../../services";
+import Todo from "./Todo/Todo";
 
 const TList = () => {
     const [todos, setTodos] = useState([]);

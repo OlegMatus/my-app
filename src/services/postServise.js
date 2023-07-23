@@ -1,6 +1,6 @@
 import {apiService} from "./apiService";
-import {urlsEndpoint} from "../constants/urlsEndpoint";
+import {urlsEndpoint} from "../constants";
 
 export const postService = {
-    getAll: (id) => apiService.get(urlsEndpoint.posts.byId(id))
+    getById: (id) => apiService.get(urlsEndpoint.posts.byId(id))
 }

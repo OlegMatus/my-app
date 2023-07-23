@@ -1,9 +1,15 @@
 import React from 'react';
+import {useNavigate} from "react-router-dom";
 
-const Comment = ({comment}) => {
+const Comment = ({comment, setCommentId}) => {
     const {postId, id, name, email, body} = comment;
+    const navigate = useNavigate();
+    const handleClick =()=>{
+    navigate(`posts/${postId}`)
+       setCommentId(id)
+    }
     return (
-        <div style={{
+        <div  onClick={handleClick} style={{
             width: '50%',
             backgroundColor: "linen",
             display: "flex",

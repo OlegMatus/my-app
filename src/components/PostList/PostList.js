@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import Post from "../Post/Post";
-import {postService} from "../../services/postServise";
+import {Post} from "./Post/Post";
+import {postService} from "../../services";
+import {useParams} from "react-router-dom";
 
 const PostList = () => {
-    const [posts, setPosts] = useState([]);
+    const {postId} = useParams();
+    const [post, setPost] = useState([null]);
     useEffect(() => {
-        postService.getAll().then(({data}) => setPosts(data))
-    }, [])
+        postService.getById(postId).then(({data}) => setPost(data))
+    }, [postId])
     return (
         <div>
-            {posts.map(post => <Post key={post.id} post={post}/>)}
+            {post&&<Post post={post}/>};
         </div>
     );
 };

@@ -1,16 +1,15 @@
 import React from 'react';
-
 const Album = ({album}) => {
     const {userId, id, title} = album;
     return (
         <div style={{
-            width: '50%',
+            width: "50%",
             backgroundColor: "lightblue",
             display: "flex",
             flexFlow: "column",
-            border: "solid grey",
-            borderRadius: '10px',
-            margin: '10px',
+            border: "3px solid grey",
+            borderRadius: "10px",
+            margin: "10px",
         }}>
             <div>userId: {userId}</div>
             <div>id: {id}</div>

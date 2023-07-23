@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import Album from "../Album/Album";
-import {albumService} from "../../services/albumService";
-
+import Album from "./Album/Album";
+import {albumService} from "../../services";
 
 const AlbumList = () => {
     const [albums, setAlbums] = useState([]);
