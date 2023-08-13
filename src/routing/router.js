@@ -1,19 +1,20 @@
 import {createBrowserRouter} from "react-router-dom";
+
 import MainLayout from "../layouts/MainLayout";
-import CarsPage from "../pages/CarsPage";
+import CarsContainer from "../components/Container/CarsContainer";
 
 export const router = createBrowserRouter([
     {
-        element:<MainLayout/>,
+        element: <MainLayout/>,
         errorElement: <h1>!!!PuPuPu...</h1>,
-        children:[
+        children: [
             {
-                path:'',
-                element:<div>Hello World!</div>
+                path: '',
+                element: <div>Hello World!</div>
             },
             {
-                path:'cars',
-                element:<CarsPage/>
+                path: 'cars',
+                element: <CarsContainer/>
             },
         ]
     }

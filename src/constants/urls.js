@@ -1,6 +1,6 @@
-const baseURL=process.env.APP_REACT_API
+const baseURL = process.env.REACT_APP_API
 
-const cars='/cars'
+const cars = '/cars'
 
 const urls = {
     cars: {

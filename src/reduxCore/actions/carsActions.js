@@ -1,30 +1,46 @@
 import {carService} from "../../services";
 
 const carsActionsTypes = {
-    SET:'GET',
-    // ADD:'ADD',
-    DELETE:'DELETE',
+    SET: 'GET',
+    SET_CAR_FOR_UPDATE: 'SET_CAR_FOR_UPDATE'
+
 };
 
-const carsActions = {
+const actions = {
     set: (payload) => ({type: carsActionsTypes.SET, payload}),
-    delete: (payload) => ({type: carsActionsTypes.DELETE, payload}),
+    setCarForUpdate: (payload) => ({type: carsActionsTypes.SET_CAR_FOR_UPDATE, payload})
 };
 
 const getCars = () => (dispatch) => {
-    carService.getAll(dispatch).then(({data}) => {dispatch(carsActions.set(data))})
+    carService.getAll(dispatch).then(({data}) => {
+        dispatch(actions.set(data))
+    })
 };
-// const addCars = () => (dispatch) => {
-//     carService.getAll(dispatch).then(({data}) => {dispatch(carsActions.set(data))})
-// };
-const deleteCar = (id) => (dispatch) => {
-    carService.deleteById(id).then(({data}) => {dispatch(carsActions.delete(id))})
+
+const create = (car) => async (dispatch) => {
+    await carService.create(car)
+    await dispatch(getCars())
 };
+
+const update = (id, car) => async (dispatch) => {
+    await carService.updateById(id, car)
+    dispatch(actions.setCarForUpdate(null))
+    await dispatch(getCars())
+}
+const deleteCar = (id) => async (dispatch) => {
+    await carService.deleteById(id)
+    await dispatch(getCars())
+};
+
+const carsActions = {
+    getCars,
+    create,
+    update,
+    deleteCar,
+    setCarForUpdate: actions.setCarForUpdate
+}
 
 export {
     carsActions,
     carsActionsTypes,
-    getCars,
-    deleteCar
-    // addCars
 }
