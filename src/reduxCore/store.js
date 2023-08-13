@@ -1,9 +1,11 @@
 import {combineReducers, createStore} from "redux";
 // import {composeWithDevTools} from "@redux-devtools/extension";
 import {episodesReducer} from "./reducers";
+import {charactersReducer} from "./reducers/charactersReducer";
 
 const rootReducer = combineReducers({
-    episodes: episodesReducer
+    episodes: episodesReducer,
+    characters: charactersReducer
 });
 // const composeEnhancers = composeWithDevTools({
 //     trace: true,

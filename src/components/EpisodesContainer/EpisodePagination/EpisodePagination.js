@@ -1,15 +1,17 @@
 import React from 'react';
 import style from './EpisodePagination.module.css'
 import {useSelector} from "react-redux";
+import {useSearchParams} from "react-router-dom";
 const EpisodePagination = () => {
     const {prevPage,nextPage} = useSelector(state => state.episodes );
+const [,setQuery] = useSearchParams();
 
-    function toPrevPage() {
-
+    const toPrevPage = () => {
+setQuery(prev => ({...prev, page: +prev.get('page')-1}))
     }
 
-    function toNextPage() {
-
+    const toNextPage = () => {
+        setQuery(prev => ({...prev, page: +prev.get('page')+1}))
     }
 
     return (
