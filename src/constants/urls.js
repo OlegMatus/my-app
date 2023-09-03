@@ -1,13 +1,15 @@
-const users = '/users'
-const posts = '/posts'
-const comments = '/comments'
+const baseURL = process.env.REACT_APP_API
+
+const cars = '/cars';
 
 const urls = {
-    users,
-    posts,
-    comments
+    cars: {
+        base: cars,
+        byId: (id) => `${cars}/${id}`
+    }
 };
 
 export {
+    baseURL,
     urls
 }
