@@ -1,15 +1,22 @@
 import React from 'react';
+import {carsService} from "../services/carsServive";
 
-const Car = ({car}) => {
+const Car = ({car, setCarForUpdate, setTrigger}) => {
     const {id, brand, price, year} = car;
+
+    const deleteCar = async () => {
+        await carsService.deleteById(id)
+        setTrigger(prev => !prev)
+    };
+
     return (
         <div>
             <div>id: {id}</div>
             <div>brand: {brand}</div>
             <div>price: {price}</div>
             <div>year: {year}</div>
-            <button>update</button>
-            <button>delete</button>
+            <button onClick={() => setCarForUpdate(car)}>update</button>
+            <button onClick={deleteCar}>delete</button>
         </div>
     );
 };

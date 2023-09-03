@@ -6,15 +6,18 @@ import CarForm from "./CarForm";
 
 const Cars = () => {
     const [cars, setCars] = useState([]);
+    const [trigger, setTrigger] = useState(null);
+    const [carForUpdate, setCarForUpdate] = useState(null);
 
     useEffect(() => {
         carsService.getAll().then(({data}) => setCars(data))
-    }, []);
+    }, [trigger]);
     return (
         <div>
-            <CarForm/>
+            <CarForm setTrigger={setTrigger} carForUpdate={carForUpdate} setCarForUpdate={setCarForUpdate}/>
             <div>
-            {cars.map(car => <Car key={car.id} car={car}/>)}
+                {cars.map(car => <Car key={car.id} car={car} setCarForUpdate={setCarForUpdate}
+                                      setTrigger={setTrigger}/>)}
             </div>
         </div>
     );
