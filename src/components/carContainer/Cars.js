@@ -8,7 +8,7 @@ const Cars = () => {
     const [carInitialState, dispatch] = useAppReducer(state => state.cars);
 
     useEffect(() => {
-        carService.getAll().then(({data}) => dispatch(carActions.setCars(data)))
+        carService.getAll().then(({data}) => dispatch(carActions.setCars(data.items)))
     }, [carInitialState.trigger, dispatch]);
     return (
         <div>
