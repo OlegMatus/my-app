@@ -3,19 +3,21 @@ import React, {FC, PropsWithChildren, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {MoviesListCard} from "./MoviesListCard";
 import {movieActions} from "../../redux";
+import {useSearchParams} from "react-router-dom";
 
 interface IProps extends PropsWithChildren {
 
 }
 
 const MoviesList: FC<IProps> = () => {
-    const {movies,currentPage, error} = useAppSelector(state => state.movies);
+    const {movies, error} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
-
+    const [query, ] = useSearchParams({page: '1'});
+    
     // console.log(movies);
     useEffect(() => {
-        dispatch(movieActions.getMovies())
-    }, [dispatch,currentPage]);
+        dispatch(movieActions.getMovies({page: +query.get('page')}))
+    }, [query,dispatch]);
 
     return (
         <div>

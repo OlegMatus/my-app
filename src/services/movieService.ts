@@ -3,8 +3,8 @@ import {IMovie} from "../interfaces";
 import {urls} from "../constants";
 
 const movieService = {
-    getAll(): IRes<IMovie[]> {
-        return apiService.get(urls.movies.base)
+    getAll(page: number): IRes<IMovie[]> {
+        return apiService.get(urls.movies.base, {params: {page}})
     }
 };
 
