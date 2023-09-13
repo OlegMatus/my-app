@@ -6,31 +6,25 @@ import {AxiosError} from "axios";
 
 interface IState {
     movies: IMovie[],
-    movie: IMovie,
-    pages: number,
-    next: number,
-    prev: number,
-    vote_average: number,
-    poster_path: string,
-    error: any
+    currentPage: number,
+    totalPages: number,
+    error: any,
 }
 
 const initialState: IState = {
-    movies: [],
-    movie: null,
-    pages: 0,
-    next: null,
-    prev: null,
-    vote_average: null,
-    poster_path: null,
-    error: null
-};
+        movies: [],
+        currentPage: 1,
+        totalPages: 2,
+        error: null
+    }
+;
 const getMovies = createAsyncThunk<IMovie[], void>(
     'moviesSlice/getMovies',
     async (_, {rejectWithValue}) => {
         try {
             const {data} = await movieService.getAll();
             return data
+
         } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
@@ -40,11 +34,7 @@ const getMovies = createAsyncThunk<IMovie[], void>(
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
-    reducers: {
-        setCurrent: (state, action) => {
-            state.movie = action.payload
-        }
-    },
+    reducers: {},
     extraReducers: builder => builder
         .addCase(getMovies.fulfilled, (state, action) => {
             state.movies = action.payload
@@ -54,13 +44,13 @@ const moviesSlice = createSlice({
         })
 })
 
-const {reducer: movieReducer, actions} = moviesSlice;
+const {reducer: moviesReducer, actions} = moviesSlice;
 const movieActions = {
     ...actions,
     getMovies
 }
 
 export {
-    movieReducer,
+    moviesReducer,
     movieActions
 }

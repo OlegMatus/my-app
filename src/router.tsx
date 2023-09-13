@@ -4,6 +4,7 @@ import {MainLayout} from "./layouts";
 import {MoviesPage} from "./pages";
 import {GenrePage} from "./pages";
 import {MovieDetailsPage} from "./pages";
+import {SearchPage} from "./pages";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: 'genres',
                 element: <GenrePage/>
+            },
+            {
+                path:'search',
+                element: <SearchPage/>
             }
         ]
     }
