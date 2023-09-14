@@ -26,7 +26,6 @@ const getMovies = createAsyncThunk<{ data: IPagination<IMovie>, page: number }, 
         try {
             const {data} = await movieService.getAll(page);
             return {data, page}
-
         } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
@@ -41,16 +40,17 @@ const moviesSlice = createSlice({
         .addCase(getMovies.fulfilled, (state, action) => {
             state.movies = action.payload.data.results
             state.currentPage = action.payload.page
+            state.totalPages = action.payload.data.total_pages
+            state.isLoading = false
         })
-        .addCase(getMovies.pending, (state, action) => {
-            state.isLoading = true
-            state.error = null
-        })
+        // .addCase(getMovies.pending, (state, action) => {
+        //     state.isLoading = true
+        //     state.error = null
+        // })
         .addCase(getMovies.rejected, (state, action) => {
             state.error = action.payload
         })
 })
-
 const {reducer: movieReducer, actions} = moviesSlice;
 const movieActions = {
     ...actions,

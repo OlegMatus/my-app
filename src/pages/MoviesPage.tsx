@@ -8,7 +8,6 @@ import {Outlet} from "react-router-dom";
 interface IProps extends PropsWithChildren {
 
 }
-
 const MoviesPage: FC<IProps> = () => {
     return (
         <div>

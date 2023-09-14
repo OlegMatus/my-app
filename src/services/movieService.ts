@@ -1,9 +1,9 @@
 import {apiService, IRes} from "./apiService";
-import {IMovie} from "../interfaces";
+import {IMovie, IPagination} from "../interfaces";
 import {urls} from "../constants";
 
 const movieService = {
-    getAll(page: number): IRes<IMovie[]> {
+    getAll(page: number): IRes<IPagination<IMovie>> {
         return apiService.get(urls.movies.base, {params: {page}})
     }
 };

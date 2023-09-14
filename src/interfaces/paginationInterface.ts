@@ -1,7 +1,7 @@
 export interface IPagination<DATA> {
-    pages: number,
+    page: number,
     total_pages: number,
     prev: string,
     next: string,
-    results: [DATA]
+    results: DATA[]
 }

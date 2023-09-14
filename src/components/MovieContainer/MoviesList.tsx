@@ -8,13 +8,12 @@ import {useSearchParams} from "react-router-dom";
 interface IProps extends PropsWithChildren {
 
 }
-
 const MoviesList: FC<IProps> = () => {
     const {movies, error} = useAppSelector(state => state.movies);
     const dispatch = useAppDispatch();
     const [query, ] = useSearchParams({page: '1'});
-    
     // console.log(movies);
+
     useEffect(() => {
         dispatch(movieActions.getMovies({page: +query.get('page')}))
     }, [query,dispatch]);
@@ -24,6 +23,7 @@ const MoviesList: FC<IProps> = () => {
             MoviesList
             <div>{error && <span>Not Found!!!</span>}</div>
             {movies?.map(movie => <MoviesListCard key={movie.id} movie={movie}/>)}
+
         </div>
     );
 };

@@ -2,7 +2,7 @@ const baseURL = process.env.REACT_APP_API
 
 const movies = '/discover/movie'
 const genres = '/genre/movie/list'
-const search = '/search/movie'
+// const search = '/search/movie'
 
 const urls = {
     movies: {
