@@ -6,7 +6,6 @@ import {Header} from "../components";
 const MainLayout = () => {
     return (
         <div>
-            MainLayout
             <Header/>
             <Outlet/>
         </div>
