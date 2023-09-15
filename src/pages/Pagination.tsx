@@ -1,5 +1,6 @@
 import React from 'react';
 import {FC, PropsWithChildren} from 'react';
+import css from './Pagination.module.css'
 
 interface IProps extends PropsWithChildren {
 
@@ -7,8 +8,8 @@ interface IProps extends PropsWithChildren {
 
 const Pagination: FC<IProps> = () => {
     return (
-        <div>
-            Pagination
+        <div className={css.Pagination}>
+
         </div>
     );
 };

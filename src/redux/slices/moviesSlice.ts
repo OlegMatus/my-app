@@ -1,13 +1,12 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {IMovie, IPagination} from "../../interfaces";
-import {movieService} from "../../services";
+import {IRes, movieService} from "../../services";
 import {AxiosError} from "axios";
-import {IDetail} from "../../interfaces/movieDetailsInterface";
 
 interface IState {
     movies: IMovie[],
-    movieDetail: IDetail,
+    movieDetail: IMovie,
     currentPage: number,
     totalPages: number,
     poster_path: string,
@@ -39,7 +38,7 @@ const getMovies = createAsyncThunk<{ data: IPagination<IMovie>, page: number }, 
         }
     }
 );
-const getMovieById = createAsyncThunk<IDetail, { id: number }>(
+const getMovieById = createAsyncThunk<IRes<IMovie>, { id: number }>(
     'moviesSlice/getMovieById',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -50,13 +49,17 @@ const getMovieById = createAsyncThunk<IDetail, { id: number }>(
             return rejectWithValue(err.response.data)
         }
     }
-)
+);
 
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
     reducers: {},
     extraReducers: builder => builder
+        .addCase(getMovies.pending, (state) => {
+            state.isLoading = true
+            state.error = null
+        })
         .addCase(getMovies.fulfilled, (state, action) => {
             const {data: {results, total_pages, page}} = action.payload
             state.movies = results
@@ -64,18 +67,22 @@ const moviesSlice = createSlice({
             state.totalPages = total_pages
             state.isLoading = false
         })
-        .addCase(getMovieById.fulfilled, (state, action) => {
-            state.movieDetail = action.payload
-        })
-
-        .addCase(getMovies.pending, (state) => {
-            state.isLoading = true
-            state.error = null
-        })
         .addCase(getMovies.rejected, (state, action) => {
             state.error = action.payload
         })
-})
+        .addCase(getMovieById.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+        })
+        .addCase(getMovieById.fulfilled, (state, action) => {
+            state.movieDetail = action.payload
+            state.isLoading = false;
+        })
+        .addCase(getMovieById.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.error.message || 'Something went wrong.';
+        })
+});
 const {reducer: movieReducer, actions} = moviesSlice;
 const movieActions = {
     ...actions,

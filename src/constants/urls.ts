@@ -8,7 +8,7 @@ const genres = '/genre/movie/list'
 const urls = {
     movies: {
         base: movies,
-        byId: (id: number): string => `${movies}/${id}`,
+        byId: (movie_id: number): string => `${movies}/${movie_id}`,
     },
     genres
 };

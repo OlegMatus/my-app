@@ -4,6 +4,7 @@ import {useAppDispatch, useAppSelector} from "../../hooks";
 import {MoviesListCard} from "../MoviesListCard";
 import {movieActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
+import css from './MoviesList.module.css'
 
 interface IProps extends PropsWithChildren {
 
@@ -18,7 +19,7 @@ const MoviesList: FC<IProps> = () => {
     }, [query,dispatch]);
 
     return (
-        <div>
+        <div className={css.Movies}>
             <div>{error && <span>Not Found!!!</span>}</div>
             {movies?.map(movie => <MoviesListCard key={movie.id} movie={movie}/>)}
 
