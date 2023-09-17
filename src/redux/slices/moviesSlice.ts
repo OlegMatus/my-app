@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {IMovie, IPagination} from "../../interfaces";
-import {IRes, movieService} from "../../services";
+import {genreService, movieService} from "../../services";
 import {AxiosError} from "axios";
 
 interface IState {
@@ -9,36 +9,40 @@ interface IState {
     movieDetail: IMovie,
     currentPage: number,
     totalPages: number,
+    currentSize: number,
     poster_path: string,
     vote_average: number,
     isLoading: boolean,
     error: any,
 }
-
 const initialState: IState = {
         movies: [],
         movieDetail: null,
         currentPage: null,
         totalPages: null,
+        currentSize: null,
         poster_path: null,
         vote_average: null,
         isLoading: null,
         error: null
     }
 ;
-const getMovies = createAsyncThunk<{ data: IPagination<IMovie>, page: number }, { page: number }>(
+const getMovies = createAsyncThunk<{ data: IPagination<IMovie>, page: number, size: number }, {
+    page: number,
+    size: number
+}>(
     'moviesSlice/getMovies',
-    async ({page}, {rejectWithValue}) => {
+    async ({page, size}, {rejectWithValue}) => {
         try {
-            const {data} = await movieService.getAll(page);
-            return {data, page}
+            const {data} = await movieService.getAll(page, size);
+            return {data, page, size}
         } catch (e) {
             const err = e as AxiosError
             return rejectWithValue(err.response.data)
         }
     }
 );
-const getMovieById = createAsyncThunk<IRes<IMovie>, { id: number }>(
+const getMovieById = createAsyncThunk<IMovie, { id: number }>(
     'moviesSlice/getMovieById',
     async ({id}, {rejectWithValue}) => {
         try {
@@ -46,7 +50,7 @@ const getMovieById = createAsyncThunk<IRes<IMovie>, { id: number }>(
             return data
         } catch (e) {
             const err = e as AxiosError
-            return rejectWithValue(err.response.data)
+            return rejectWithValue(err.response?.data)
         }
     }
 );
@@ -61,10 +65,11 @@ const moviesSlice = createSlice({
             state.error = null
         })
         .addCase(getMovies.fulfilled, (state, action) => {
-            const {data: {results, total_pages, page}} = action.payload
+            const {data: {results, total_pages, page, size}} = action.payload
             state.movies = results
             state.currentPage = page
             state.totalPages = total_pages
+            state.currentSize = size
             state.isLoading = false
         })
         .addCase(getMovies.rejected, (state, action) => {

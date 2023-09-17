@@ -7,8 +7,3 @@
     font-family: 'Ubuntu', sans-serif;;
 
 }
-@font-face {
-    font-family: 'YourFontName';
-    src: url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap') format('woff2'),
-    url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap') format('woff');
-}

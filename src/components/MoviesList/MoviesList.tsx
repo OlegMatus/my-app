@@ -2,7 +2,7 @@ import React, {FC, PropsWithChildren, useEffect} from 'react';
 
 import {useAppDispatch, useAppSelector} from "../../hooks";
 import {MoviesListCard} from "../MoviesListCard";
-import {movieActions} from "../../redux";
+import {genreActions, movieActions} from "../../redux";
 import {useSearchParams} from "react-router-dom";
 import css from './MoviesList.module.css'
 
@@ -11,11 +11,14 @@ interface IProps extends PropsWithChildren {
 }
 const MoviesList: FC<IProps> = () => {
     const {movies, error} = useAppSelector(state => state.movies);
+    const {} = useAppSelector(state => state.genres);
+
     const dispatch = useAppDispatch();
-    const [query, ] = useSearchParams({page: '1'});
+    const [query, id, ] = useSearchParams({page: '1', size: '10'});
 
     useEffect(() => {
-        dispatch(movieActions.getMovies({page: +query.get('page')}))
+        dispatch(movieActions.getMovies({page: +query.get('page'), size: +query.get('size')}))
+        dispatch(genreActions.getGenres())
     }, [query,dispatch]);
 
     return (

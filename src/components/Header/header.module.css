@@ -1,16 +1,23 @@
 body {
     margin: 0;
+    color: darkgoldenrod;
+    @font-face {
+        font-family: 'YourFontName';
+        src: url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap') format('woff2'),
+        url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap') format('woff');
+    }
 }
 
 .Header {
     width: 100%;
     height: 15vh;
     display: flex;
-    flex-flow: wrap;
+    flex-flow: wrap-reverse;
     justify-content: center;
     align-items: center;
     background-color: black;
     font-size: 35px;
+
 }
 
 .links {
@@ -23,4 +30,19 @@ body {
 .links a {
     text-decoration: none;
     color: darkgoldenrod;
+}
+
+.Switch {
+    display: flex;
+    justify-content: end;
+    flex-direction: row-reverse;
+    align-items: center;
+    font-size: 20px;
+    /*padding-left: 500px;*/
+
+}
+.fix{
+    display: flex;
+    justify-content: end;
+    flex-wrap: wrap;
 }

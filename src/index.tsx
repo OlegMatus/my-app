@@ -4,13 +4,18 @@ import {router} from "./router";
 
 import {Provider} from "react-redux";
 import {store} from "./redux";
+// import { ThemeProvider } from '@emotion/react';
+// import {useAppSelector} from "./hooks";
 
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
 root.render(
+    // <ThemeProvider theme={themeSwitch ? css.black : css.white}>
     <Provider store={store}>
+
         <RouterProvider router={router}/>
     </Provider>
+    // </ThemeProvider>
 );
