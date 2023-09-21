@@ -1,12 +1,14 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 import {IMovie, IPagination} from "../../interfaces";
-import {genreService, movieService} from "../../services";
+import {movieService} from "../../services";
 import {AxiosError} from "axios";
 
 interface IState {
     movies: IMovie[],
-    movieDetail: IMovie,
+    moviesByGenres: IMovie[],
+    // movieDetail: IMovie,
+    currentMovie: IMovie,
     currentPage: number,
     totalPages: number,
     currentSize: number,
@@ -15,9 +17,12 @@ interface IState {
     isLoading: boolean,
     error: any,
 }
+
 const initialState: IState = {
         movies: [],
-        movieDetail: null,
+        moviesByGenres: [],
+        // movieDetail: null,
+        currentMovie: null,
         currentPage: null,
         totalPages: null,
         currentSize: null,
@@ -55,6 +60,19 @@ const getMovieById = createAsyncThunk<IMovie, { id: number }>(
     }
 );
 
+// const getMoviesByGenres = createAsyncThunk<{data:IPagination<IMovie>,genres_id: number, page: number },{genres_id: number, page: number }>(
+//     'genresSlice/getMoviesByGenres',
+//     async ({genres_id, page}, {rejectWithValue}) => {
+//         try {
+//             const {data} = await movieService.getByGenres(genres_id, page);
+//             return {data, genres_id, page}
+//         } catch (e) {
+//             const err = e as AxiosError
+//             return rejectWithValue(err.response.data)
+//         }
+//     }
+// );
+
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
@@ -80,19 +98,25 @@ const moviesSlice = createSlice({
             state.error = null;
         })
         .addCase(getMovieById.fulfilled, (state, action) => {
-            state.movieDetail = action.payload
+            state.currentMovie = action.payload
             state.isLoading = false;
         })
         .addCase(getMovieById.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error.message || 'Something went wrong.';
         })
+        // .addCase(getMoviesByGenres.fulfilled, (state, action) => {
+        //     state.moviesByGenres = action.payload.data.results
+        //     state.totalPages = action.payload.data.total_pages
+        //     state.currentPage = action.payload.data.page
+        // })
 });
 const {reducer: movieReducer, actions} = moviesSlice;
 const movieActions = {
     ...actions,
     getMovies,
-    getMovieById
+    getMovieById,
+    // getMoviesByGenres
 }
 
 export {

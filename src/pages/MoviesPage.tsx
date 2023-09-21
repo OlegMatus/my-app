@@ -2,7 +2,7 @@ import React from 'react';
 import {FC, PropsWithChildren} from 'react';
 
 import {MoviesList} from "../components";
-import {PaginationMovie} from "../components/Pagination/PaginationMovie";
+import {PaginationMovie} from "../components";
 import {Outlet} from "react-router-dom";
 
 interface IProps extends PropsWithChildren {

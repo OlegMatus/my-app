@@ -8,35 +8,35 @@ import {SearchPage} from "./pages";
 import React from "react";
 
 const router = createBrowserRouter([
-    {
-        path: '',
-        element: <MainLayout/>,
-        children: [
-            {
-                index: true,
-                element: <Navigate to={'movies'}/>
-            },
-            {
-                path: 'movies',
-                element: <MoviesPage/>,
-                children: [
-                    {
-                        path: ':id',
-                        element: <MovieDetailsPage/>
-                    }
-                ]
-            },
-            {
-                path: 'genres',
-                element: <GenrePage/>
-            },
-            {
-                path:'search',
-                element: <SearchPage/>
-            }
-        ]
-    }
-]);
+        {
+            path: '',
+            element: <MainLayout/>,
+            children: [
+                {
+                    index: true,
+                    element: <Navigate to={'movies'}/>
+                },
+                {
+                    path: 'movies',
+                    element: <MoviesPage/>,
+                },
+                {
+                    path: 'movies/:id',
+                    element: <MovieDetailsPage/>
+                },
+
+                {
+                    path: 'genres',
+                    element: <GenrePage/>
+                },
+                {
+                    path: 'search',
+                    element: <SearchPage/>
+                }
+            ]
+        }
+    ])
+;
 
 export {
     router

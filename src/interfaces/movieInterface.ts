@@ -1,5 +1,6 @@
 export interface IMovie {
     id: number;
+    genres_id: number,
     title: string;
     overview: string;
     vote_average: number;
